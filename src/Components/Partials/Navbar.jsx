@@ -1,7 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
+    let navigate = useNavigate()
+
+    function logout(){
+        localStorage.removeItem("login")
+        localStorage.removeItem("name")
+        localStorage.removeItem("userid")
+        navigate("/login")
+    }
     return (
         <>
             {/* <!-- Topbar Start --> */}
@@ -86,7 +94,7 @@ export default function Navbar() {
                                                 </>:
                                                 <Link to="/admin" className="dropdown-item">Profile</Link>
                                             }
-                                            <button className="dropdown-item">Logout</button>
+                                            <button className="dropdown-item" onClick={logout}>Logout</button>
                                         </div>
                                     </div>
                                     :

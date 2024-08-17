@@ -49,12 +49,20 @@ export default function Signup() {
             if(error)
                 setShow(true)
             else{
+                let item = {
+                    name:data.name,
+                    username:data.username,
+                    email:data.email,
+                    phone:data.phone,
+                    password:data.password,
+                    role:"Buyer"
+                }
                 let response = await fetch("/users",{
                     method:"POST",
                     headers:{
                         "content-type":"application/json"
                     },
-                    body:JSON.stringify({ ...data, role:"Buyer" })
+                    body:JSON.stringify(item)
                 })
                 response = await response.json()
                 if(response)
