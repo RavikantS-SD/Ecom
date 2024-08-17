@@ -36,32 +36,35 @@ export default function Login() {
     
     async function postData(e){
         e.preventDefault()
-        if(data.password === data.cpassword){
             let error = Object.values(errorMessage).find(x=>x!=="")
             if(error)
                 setShow(true)
             else{
                 let response = await fetch("/users",{
-                    method:"POST",
+                    method:"GET",
                     headers:{
                         "content-type":"application/json"
-                    },
-                    body:JSON.stringify({...data})
+                    }
                 })
                 response = await response.json()
-                if(response)
-                    navigate("/login")
-            }
-        }
-        else{
-            setShow(true)
-            setErrorMessage((old)=>{
-                return{
-                    ...old,
-                    'password':"Password And Confirm Password Doesn't Match"
+                if(response){
+                    let item = response.find((x)=>x.username === data.username || x.email === data.username || x.password === data.password)
+                    if(item){
+                        localStorage.setItem("login",true)
+                        localStorage.setItem("name",item.name)
+                        localStorage.setItem("userid",item.id)
+                        navigate("/profile")
+                    }
+                    else{
+                        setErrorMessage((old)=>{
+                            return{
+                                ...old,
+                                'username':"Invalid Username or Password"
+                            }
+                        })
+                    }
                 }
-            })
-        }
+            }
     }
 
   return (
@@ -74,7 +77,7 @@ export default function Login() {
                 <h5 className='bg-primary p-2 text-center text-light'>Login To Your Account</h5>
                 <form onSubmit={postData}>
                     <div className="mb-3">
-                        <input type="text" name="username" onChange={getInputData} className={`form-control border-2 ${show && errorMessage.username?"border-danger":"border-primary"}`} placeholder='Enter User Name' />
+                        <input type="text" name="username" onChange={getInputData} className={`form-control border-2 ${show && errorMessage.username?"border-danger":"border-primary"}`} placeholder='Enter UserName or Email Address' />
                         {show && errorMessage.username ? <p className='text-danger'>{errorMessage.username}</p>:""}
                     </div>
 
