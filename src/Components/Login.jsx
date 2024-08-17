@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import BreadCrum from './Partials/BreadCrum'
 import formValidator from './FormValidators/formValidator'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Login() {
     let [data, setData] = useState({
@@ -90,6 +90,10 @@ export default function Login() {
                         <button type='submit' className='btn btn-primary w-100'>Login</button>
                     </div>
                 </form>
+                <div className='d-flex justify-content-between'>
+                    <Link to="#">Forget Password</Link>
+                    <Link to="/signup">Doesn't Have Account? Create</Link>
+                </div>
             </div>
         </div>
     </div>

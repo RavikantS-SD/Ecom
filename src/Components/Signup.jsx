@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import BreadCrum from './Partials/BreadCrum'
 import formValidator from './FormValidators/formValidator'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Signup() {
     let [data, setData] = useState({
@@ -54,7 +54,7 @@ export default function Signup() {
                     headers:{
                         "content-type":"application/json"
                     },
-                    body:JSON.stringify({...data})
+                    body:JSON.stringify({ ...data, role:"Buyer" })
                 })
                 response = await response.json()
                 if(response)
@@ -117,6 +117,7 @@ export default function Signup() {
                         <button type='submit' className='btn btn-primary w-100'>Signup</button>
                     </div>
                 </form>
+                <Link to="/login">Already Have Account? Login</Link>
             </div>
         </div>
     </div>
